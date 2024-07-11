@@ -1,0 +1,3 @@
+[submodule "pycity_scheduling"]
+    path = pycity_scheduling
+    url = https://github.com/anon98/pycity_fork
