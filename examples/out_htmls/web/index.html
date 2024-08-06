@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMS Scheduling</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .tabs {
+            display: flex;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            background-color: #ccc;
+            margin: 5px;
+        }
+        .tab:hover {
+            background-color: #ddd;
+        }
+        .content {
+            height: calc(100% - 50px);
+            display: none;
+            overflow: hidden;
+        }
+        .active {
+            background-color: #fff !important;
+            border-bottom: 1px solid #fff;
+        }
+        iframe {
+            width: calc(100% - 2cm);
+            height: 100%;
+            border: none;
+            margin-left: 1cm; /* Centering the iframe */
+        }
+    </style>
+    <script>
+        function showContent(contentId) {
+            var contents = document.getElementsByClassName('content');
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].style.display = 'none';
+            }
+            document.getElementById(contentId).style.display = 'block';
+
+            var tabs = document.getElementsByClassName('tab');
+            for (var i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active');
+            }
+            document.getElementById(contentId + '-tab').classList.add('active');
+        }
+
+        window.onload = function() {
+            showContent('content1');
+        }
+    </script>
+</head>
+<body>
+    <div class="tabs">
+        <div id="content1-tab" class="tab" onclick="showContent('content1')">Peak Shaving</div>
+        <div id="content2-tab" class="tab" onclick="showContent('content2')">Price Based</div>
+    </div>
+    <div id="content1" class="content">
+        <iframe src="page1.html"></iframe>
+    </div>
+    <div id="content2" class="content">
+        <iframe src="page2.html"></iframe>
+    </div>
+</body>
+</html>

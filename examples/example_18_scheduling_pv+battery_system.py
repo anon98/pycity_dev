@@ -46,7 +46,7 @@ def main(do_plot=False):
     cd = CityDistrict(environment=env, objective='peak-shaving')
 
     # Building equipped with an inflexible load and a PV+battery system / building objective is peak-shaving:
-    bd = Building(environment=env, objective='peak-shaving')
+    bd = Building(environment=env, objective='none')
     cd.addEntity(entity=bd, position=[0, 0])
     ap = Apartment(environment=env)
     bd.addEntity(ap)
@@ -54,8 +54,8 @@ def main(do_plot=False):
     ap.addEntity(fl)
     bes = BuildingEnergySystem(environment=env)
     bd.addEntity(bes)
-    pv = Photovoltaic(environment=env, method=0, area=25.0, beta=30.0, eta_noct=0.15)
-    bes.addDevice(pv)
+    # pv = Photovoltaic(environment=env, method=0, area=25.0, beta=30.0, eta_noct=0.15)
+    # bes.addDevice(pv)
     bat = Battery(environment=env, e_el_max=13.6, p_el_max_charge=24.0, p_el_max_discharge=3.6, soc_init=0.5, eta=1.0,
                   storage_end_equality=True)
     bes.addDevice(bat)
@@ -77,11 +77,11 @@ def main(do_plot=False):
     plt.title("Schedules")
     plt.ylabel("Building [kW]")
 
-    ax1 = plt.subplot(gs[1], sharex=ax0)
-    ax1.plot(plot_time, pv.p_el_schedule)
-    plt.xlim((0, env.timer.timesteps_used_horizon - 1))
-    plt.grid()
-    plt.ylabel("PV [kW]")
+    # ax1 = plt.subplot(gs[1], sharex=ax0)
+    # ax1.plot(plot_time, pv.p_el_schedule)
+    # plt.xlim((0, env.timer.timesteps_used_horizon - 1))
+    # plt.grid()
+    # plt.ylabel("PV [kW]")
 
     ax2 = plt.subplot(gs[2], sharex=ax0)
     ax2.plot(plot_time, fl.p_el_schedule)
@@ -102,6 +102,20 @@ def main(do_plot=False):
     plt.ylabel("Battery [kWh]")
 
     plt.xlabel("Time", fontsize=12)
+    
+    # Print schedules and other info
+    print('\nBuilding Electrical Schedule:')
+    print(list(bd.p_el_schedule))
+    
+    print('\nFixed Load Schedule:')
+    print(list(fl.p_el_schedule))
+    
+    print('\nBattery Power Schedule:')
+    print(list(bat.p_el_schedule))
+    
+    print('\nBattery Energy Schedule:')
+    print(list(bat.e_el_schedule))
+
 
     if do_plot:
         figManager = plt.get_current_fig_manager()
